@@ -1,3 +1,6 @@
+%option noyywrap
+%option nounput
+%option noinput
 %{
 #include "parser.tab.h"
 %}
