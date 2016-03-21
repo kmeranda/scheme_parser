@@ -14,6 +14,8 @@ for use by scanner.c.
 %token TOKEN_DIVIDE
 %token TOKEN_LPAREN
 %token TOKEN_RPAREN
+%token TOKEN_LAT
+%token TOKEN_ATOM
 
 %{
 

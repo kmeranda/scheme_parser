@@ -20,6 +20,8 @@ LETTER	[a-zA-Z_]
 \(			return TOKEN_LPAREN;
 \)			return TOKEN_RPAREN;
 \;			return TOKEN_SEMI;
+lat?			return TOKEN_LAT;
+atom?			return TOKEN_ATOM;
 .			{ printf("scan error: bad token: %c\n",yytext[0]); }
 %%
 
