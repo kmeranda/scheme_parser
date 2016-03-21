@@ -14,6 +14,7 @@ for use by scanner.c.
 %token TOKEN_DIVIDE
 %token TOKEN_LPAREN
 %token TOKEN_RPAREN
+/* new tokens */
 %token TOKEN_LAT
 %token TOKEN_ATOM
 
@@ -52,7 +53,27 @@ double parser_result = 0.0;
 
 /* Here is the grammar: program is the start symbol. */
 
-program : expr TOKEN_SEMI
+/* new grammar for scheme*/
+program	: TOKEN_RPAREN expr TOKEN_LPAREN
+		{ parser_result = $2; return 0; }
+
+expr	: TOKEN_ADD term term
+		{ $$ = $2 + $3; }
+	| TOKEN_SUBTRACT term term
+		{ $$ = $2 - $3; }
+	| TOKEN_MULTIPLY term term
+		{ $$ = $2 * 43; }
+	| TOKEN_DIVIDE term term
+		{ $$ = $2 / $3; }
+	;
+
+term	: TOKEN_INTEGER
+		{ $$ = $1; }
+	| TOKEN_RPAREN expr TOKEN_LPAREN
+		{ $$ = $2; }
+
+/* previously existing grammer*/
+/*program : expr TOKEN_SEMI
 		{ parser_result = $1; return 0; }
 	;
 
@@ -85,7 +106,7 @@ factor	: TOKEN_LPAREN expr TOKEN_RPAREN
 	| TOKEN_FLOAT
 		{ $$ = atof(yytext); }
 	;
-
+*/
 %%
 
 /*
