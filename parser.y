@@ -54,7 +54,7 @@ double parser_result = 0.0;
 /* Here is the grammar: program is the start symbol. */
 
 /* new grammar for scheme*/
-program	: TOKEN_RPAREN expr TOKEN_LPAREN
+program	: TOKEN_LPAREN expr TOKEN_RPAREN
 		{ parser_result = $2; return 0; }
 
 expr	: TOKEN_ADD term term
@@ -69,8 +69,9 @@ expr	: TOKEN_ADD term term
 
 term	: TOKEN_INTEGER
 		{ $$ = $1; }
-	| TOKEN_RPAREN expr TOKEN_LPAREN
+	| TOKEN_LPAREN expr TOKEN_RPAREN
 		{ $$ = $2; }
+	;
 
 /* previously existing grammer*/
 /*program : expr TOKEN_SEMI
