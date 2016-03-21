@@ -62,7 +62,7 @@ expr	: TOKEN_ADD term term
 	| TOKEN_SUBTRACT term term
 		{ $$ = $2 - $3; }
 	| TOKEN_MULTIPLY term term
-		{ $$ = $2 * 43; }
+		{ $$ = $2 * $3; }
 	| TOKEN_DIVIDE term term
 		{ $$ = $2 / $3; }
 	;
