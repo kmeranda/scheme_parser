@@ -4,7 +4,7 @@ causing them to be automatically generated in parser.tab.h
 for use by scanner.c.
 */
 
-%token TOKEN_ID
+/*%token TOKEN_ID*/
 %token TOKEN_INTEGER
 %token TOKEN_FLOAT
 %token TOKEN_SEMI
@@ -15,6 +15,7 @@ for use by scanner.c.
 %token TOKEN_LPAREN
 %token TOKEN_RPAREN
 /* new tokens */
+%token TOKEN_CAR
 %token TOKEN_LAT
 %token TOKEN_ATOM
 
@@ -65,11 +66,21 @@ expr	: TOKEN_ADD term term
 		{ $$ = $2 * $3; }
 	| TOKEN_DIVIDE term term
 		{ $$ = $2 / $3; }
+	| TOKEN_CAR TOKEN_LPAREN list TOKEN_RPAREN
+		{ $$ = $2; } 
 	;
 
 term	: TOKEN_INTEGER
 		{ $$ = $1; }
 	| TOKEN_LPAREN expr TOKEN_RPAREN
+		{ $$ = $2; }
+	;
+
+list	: TOKEN_INTEGER
+		{ $$ = $1; }
+	| TOKEN_LPAREN list TOKEN_RPAREN
+		{ $$ = $2; }
+	| TOKEN_INTEGER list
 		{ $$ = $2; }
 	;
 
