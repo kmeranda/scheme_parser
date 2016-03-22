@@ -18,3 +18,4 @@ Optional:
 literals
 formality of parens in expr
 eq?
+add functionalities for types other than int
