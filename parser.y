@@ -62,7 +62,7 @@ program	: expr
 expr	: TOKEN_LPAREN func TOKEN_RPAREN
 		{ $$ = $2; }
 	| term
-		{ $$ = $1 } 
+		{ $$ = $1; } 
 	;
 /* functions that returns a single value */
 func	: TOKEN_ADD expr expr
