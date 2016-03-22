@@ -72,7 +72,7 @@ func	: TOKEN_ADD expr expr
 	| TOKEN_MULTIPLY expr expr
 		{ $$ = $2 * $3; }
 	| TOKEN_DIVIDE expr expr
-		{ $$ = $2 / $3; }
+		{ $$ = $2 / $3; } /* needs to return error if dividing by 0 */
 	| TOKEN_CAR list
 		{ $$ = $2; } /* need to modify function to get first element of the array */
 	;
