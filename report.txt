@@ -6,4 +6,4 @@ Relavance: We created a parser for the Scheme programming language, which made u
 
 Effort: We all contributed over 7 hours on this project
 
-Content:
+Content: We created a parser for the Scheme programming language. We worked off a base of code from Kelsey's compilers class. We modified the grammar to recognize the basic syntax of scheme, as well as a few built-in functions such as +, -, *, /, and car.
