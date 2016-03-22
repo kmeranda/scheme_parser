@@ -82,7 +82,7 @@ func	: TOKEN_ADD expr expr
 	| TOKEN_DIVIDE expr expr
 		{ $$ = $2 / $3; } /* needs to return error if dividing by 0 */
 	| TOKEN_CAR list
-		{ $$ = $2[0]; } /* need to modify function to get first element of the array */
+		{ $$ = $2[0]; } /* $2 is the array, so returns first element */
 	;
 /* single value (int) */
 term	: TOKEN_INTEGER
@@ -92,22 +92,22 @@ term	: TOKEN_INTEGER
 list	: TOKEN_LPAREN list_item TOKEN_RPAREN
 		{ $$ = $2; }
 	;
-list_item : list_item expr /* temporary to avoid compile errors */
+list_item : list_item expr
 		{
-			int array[1]; 
-			array[0] = $1; 
-			$$ = array;		/* can't set double = int array */ 
-			printf("array[0] = %d\n", array[0]); /* stores correct value :) */
+			int length = sizeof($1); /* get size of passed in array */
+			int array[length+1];
+			for (int i=0; i<length; i++) { /* copy list_item into new array */
+				array[i] = $1[i];	
+			} 
+			array[length] = $2; /* append expr value into array */
+			$$ = array;		 
 		}
-		/*{ $$ = $2; }*/	/* need to modify function to set the left of the rule = to array of list_item with expr appended to the end */
 	| expr	
 		{
 			int array[1]; 
 			array[0] = $1; 
-			$$ = array;		/* can't set double = int array */ 
-			printf("array[0] = %d\n", array[0]); /* stores correct value :) */
+			$$ = array;		 
 		}	
-		/*{ $$ = $1; }*/	/* need to modify function to set left of the rule = to array of length one with arr[0] = expr */
 	;
 
 /* previously existing grammer*/

@@ -11,10 +11,10 @@ scanner.c: scanner.l parser.tab.h
 	flex --noyywrap -o scanner.c scanner.l
 
 %.o: %.c
-	gcc -Wall -c $< -o $@
+	gcc -Wall -std=c99 -c $< -o $@
 
 scheme_parser: parser.tab.o scanner.o main.o
-	gcc -g parser.tab.o scanner.o main.o -o scheme_parser -lm
+	gcc -g -std=c99 parser.tab.o scanner.o main.o -o scheme_parser -lm
 
 .PHONY: clean
 
