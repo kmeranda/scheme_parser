@@ -86,8 +86,14 @@ list	: TOKEN_LPAREN list_item TOKEN_RPAREN
 	;
 list_item : list_item expr
 		{ $$ = $2; }	/* need to modify function to set the left of the rule = to array of list_item with expr appended to the end */
-	| expr		
-		{ $$ = $1; }	/* need to modify function to set left of the rule = to array of length one with arr[0] = expr */
+	| expr	
+		{
+			int array[1]; 
+			array[0] = $1; 
+			/*$$ = array;*/		/* can't set double = int array */ 
+			printf("array[0] = %d\n", array[0]); /* stores correct value :) */
+		}	
+		/*{ $$ = $1; }*/	/* need to modify function to set left of the rule = to array of length one with arr[0] = expr */
 	;
 
 /* previously existing grammer*/
