@@ -24,8 +24,8 @@ for use by scanner.c.
 	int int_pointer;
 	int* int_array;
 };
-%type <int_pointer> program expr func term
-%type <int_array> list list_item
+%type <int_pointer> program expr func term list list_item
+/*%type <int_array> list list_item*/
 
 %{
 
@@ -82,7 +82,7 @@ func	: TOKEN_ADD expr expr
 	| TOKEN_DIVIDE expr expr
 		{ $$ = $2 / $3; } /* needs to return error if dividing by 0 */
 	| TOKEN_CAR list
-		{ $$ = $2[0]; } /* $2 is the array, so returns first element */
+		{ $$ = $2; } /* $2 is the array, so returns first element */
 	;
 /* single value (int) */
 term	: TOKEN_INTEGER
@@ -92,21 +92,26 @@ term	: TOKEN_INTEGER
 list	: TOKEN_LPAREN list_item TOKEN_RPAREN
 		{ $$ = $2; }
 	;
-list_item : list_item expr
+list_item : expr list_item
 		{
-			int length = sizeof($1); /* get size of passed in array */
+			$$ = $1;
+		/*	int array[1];
+			array[0] = $1;
+			$$ = array;*/
+		/*	int length = sizeof($1); get size of passed in array
 			int array[length+1];
-			for (int i=0; i<length; i++) { /* copy list_item into new array */
+			for (int i=0; i<length; i++) { copy list_item into new array 
 				array[i] = $1[i];	
 			} 
-			array[length] = $2; /* append expr value into array */
-			$$ = array;		 
+			array[length] = $2;  append expr value into array
+			$$ = array;		 */
 		}
 	| expr	
 		{
-			int array[1]; 
+			$$ = $1;
+		/*	int array[1]; 
 			array[0] = $1; 
-			$$ = array;		 
+			$$ = array;		 */
 		}	
 	;
 
