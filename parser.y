@@ -71,7 +71,7 @@ expr	: TOKEN_ADD term term
 	;
 
 term	: TOKEN_INTEGER
-		{ $$ = $1; }
+		{ $$ = atoi(yytext); }
 	| TOKEN_LPAREN expr TOKEN_RPAREN
 		{ $$ = $2; }
 	;
