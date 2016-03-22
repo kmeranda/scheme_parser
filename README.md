@@ -8,9 +8,9 @@ B -> n | (B) | nB
 n = integers
 
 To do:
-Store lats into array
+Store lats into array -- a[0] would be (car lat)
 cdr
-lat?
+lat? -- true/false returned as 1/0 instead
 atom?
 zero?
 
