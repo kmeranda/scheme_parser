@@ -12,3 +12,9 @@ Store lats into array
 cdr
 lat?
 atom?
+zero?
+
+Optional:
+literals
+formality of parens in expr
+eq?
