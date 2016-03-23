@@ -80,9 +80,15 @@ func	: TOKEN_ADD expr expr
 	| TOKEN_MULTIPLY expr expr
 		{ $$ = $2 * $3; }
 	| TOKEN_DIVIDE expr expr
-		{ $$ = $2 / $3; } /* needs to return error if dividing by 0 */
+		{
+			if($3==0) {
+				printf("runtime error: divide by zero\n");
+				exit(1);
+			}
+			$$ = $2 / $3;
+		}
 	| TOKEN_CAR list
-		{ $$ = $2; } /* $2 is the array, so returns first element */
+		{ $$ = $2; }
 	;
 /* single value (int) */
 term	: TOKEN_INTEGER
@@ -93,63 +99,10 @@ list	: TOKEN_LPAREN list_item TOKEN_RPAREN
 		{ $$ = $2; }
 	;
 list_item : expr list_item
-		{
-			$$ = $1;
-		/*	int array[1];
-			array[0] = $1;
-			$$ = array;*/
-		/*	int length = sizeof($1); get size of passed in array
-			int array[length+1];
-			for (int i=0; i<length; i++) { copy list_item into new array 
-				array[i] = $1[i];	
-			} 
-			array[length] = $2;  append expr value into array
-			$$ = array;		 */
-		}
+		{ $$ = $1; }
 	| expr	
-		{
-			$$ = $1;
-		/*	int array[1]; 
-			array[0] = $1; 
-			$$ = array;		 */
-		}	
+		{ $$ = $1; }	
 	;
-
-/* previously existing grammer*/
-/*program : expr TOKEN_SEMI
-		{ parser_result = $1; return 0; }
-	;
-
-expr	: expr TOKEN_ADD term
-		{ $$ = $1 + $3; }
-	| expr TOKEN_SUBTRACT term
-		{ $$ = $1 - $3; }
-	| term
-		{ $$ = $1; }
-	;
-
-term	: term TOKEN_MULTIPLY factor
-		{ $$ = $1 * $3; }
-	| term TOKEN_DIVIDE factor
-		{
-			if($3==0) {
-	 			printf("runtime error: divide by zero\n");
-				exit(1);
-			}
-			$$ = $1 / $3;
-		}
-	| factor
-		{ $$ = $1; }
-	;
-
-factor	: TOKEN_LPAREN expr TOKEN_RPAREN
-		{ $$ = $2; }
-	| TOKEN_SUBTRACT factor
-		{ $$ = -$2; }
-	| TOKEN_FLOAT
-		{ $$ = atof(yytext); }
-	;
-*/
 %%
 
 /*
